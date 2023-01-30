@@ -1,11 +1,19 @@
 
+import argparse
 import re
 import sys
 from pathlib import Path
 import subprocess
 import tempfile
 
-with open('/home/doki/work/ncs/sizegraph/web-build/build/index.html', 'r') as fd:
+parser = argparse.ArgumentParser()
+
+parser.add_argument('filename')
+parser.add_argument('-o', '--out', default=None)
+
+args = parser.parse_args()
+
+with open(args.filename, 'r', encoding='utf-8') as fd:
     html = fd.read()
 
 tags_re = re.compile(r'(<style(?:\s+.*?)?>.+?</style>)|(<script(?:\s+.*?)?>)(.+?)(</script>)', flags=re.IGNORECASE|re.DOTALL)
@@ -86,10 +94,12 @@ def compress_tags(match: re.Match) -> str:
 
 out = tags_re.sub(compress_tags, html)
 
-print(f'Compression done.')
-print(f'Size before: {len(html)}')
-print(f'Size after:  {len(out)}')
-print(f'Ratio:       {round(len(out) / len(html) * 1000) / 10}%')
-
-with open('/home/doki/work/ncs/o.html', 'w') as fd:
-    fd.write(out)
+if args.out is None:
+    print(out)
+else:
+    print(f'Compression done.')
+    print(f'Size before: {len(html)}')
+    print(f'Size after:  {len(out)}')
+    print(f'Ratio:       {round(len(out) / len(html) * 1000) / 10}%')
+    with open(args.out, 'w', encoding='utf-8') as fd:
+        fd.write(out)
