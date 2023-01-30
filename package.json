@@ -1,0 +1,20 @@
+{
+  "name": "strings-compress",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Simple text-based compression of strings.",
+  "main": "main.js",
+  "scripts": {
+    "build": "npx esbuild src/decompress-string.ts --minify --outfile=dist/decompress-string.min.js",
+    "prepack": "npm run build",
+    "pack": "cp python/*.py dist/ && cp README.md dist/ && rm -f strings-compress-v0.0.1.zip && cd dist && 7z a ../strings-compress-v0.0.1.zip *"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.17.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "uglify-js": "^3.17.4"
+  }
+}
