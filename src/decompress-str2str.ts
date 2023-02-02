@@ -1,5 +1,7 @@
 
-function decompressString(text: string): string {
+function decompress(text: string): string {
+
+    const t = Date.now();
 
     const VALIDATE_HEADER = false;
     const alphabet = new Uint8Array(128);
@@ -189,5 +191,9 @@ function decompressString(text: string): string {
         }
     }
 
-    return new TextDecoder().decode(new Uint8Array(out.buffer, 0, outLen));
+    const res = new TextDecoder().decode(new Uint8Array(out.buffer, 0, outLen));
+
+    console.log(`Decompressed ${text.length} chars to ${res.length} chars in ${Date.now() - t}ms.`);
+
+    return res;
 }

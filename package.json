@@ -5,7 +5,7 @@
   "description": "Simple text-based compression of strings.",
   "main": "main.js",
   "scripts": {
-    "build": "npx esbuild src/decompress-string.ts --minify --outfile=dist/decompress-string.min.js",
+    "build": "npx ts-node scripts/build.ts",
     "prepack": "npm run build",
     "pack": "cp python/*.py dist/ && cp README.md dist/ && rm -f strings-compress-v0.0.1.zip && cd dist && 7z a ../strings-compress-v0.0.1.zip *"
   },
